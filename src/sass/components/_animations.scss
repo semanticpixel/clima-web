@@ -1,0 +1,317 @@
+@keyframes pulse {
+    0% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/*
+ * Blink animation
+ */
+@-webkit-keyframes blink {
+    /**
+     * At the start of the animation the dot
+     * has an opacity of .2
+     */
+    0% {
+        opacity: .2; /* 0 */
+    }
+
+    /**
+     * At 20% the dot is fully visible and
+     * then fades out slowly
+     */
+    20% {
+        opacity: 1;
+        /*     transform: scale(1.2); */
+    }
+
+    /**
+     * Until it reaches an opacity of .2 and
+     * the animation can start again
+     */
+    100% {
+        opacity: .2; /* 0 */
+    }
+}
+
+@keyframes blink {
+    /**
+     * At the start of the animation the dot
+     * has an opacity of .2
+     */
+    0% {
+        opacity: .2; /* 0 */
+    }
+
+    /**
+     * At 20% the dot is fully visible and
+     * then fades out slowly
+     */
+    20% {
+        opacity: 1;
+        /*     transform: scale(1.2); */
+    }
+
+    /**
+     * Until it reaches an opacity of .2 and
+     * the animation can start again
+     */
+    100% {
+        opacity: .2; /* 0 */
+    }
+}
+
+/*
+ * Fade Left
+ */
+@-webkit-keyframes fade_left {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    24% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    48% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    73% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+@keyframes fade_left {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    24% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    48% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    73% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+/*
+ * Fade Center
+ */
+@-webkit-keyframes fade_center {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    13% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    37% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    61% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    86% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+@keyframes fade_center {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    13% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    37% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    61% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    86% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+/*
+ * Fade Right
+ */
+@-webkit-keyframes fade_right {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    27% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    51% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    75% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -webkit-animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+@keyframes fade_right {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    27% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    51% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    }
+
+    75% {
+        opacity: 1;
+        transform: scale(1);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(.5);
+        animation-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000);
+    }
+}
+
+// Bar width animation
+//
+// NOTE:
+// We have to use visibility hidden at keyframe 0% instead of applying visibility: hidden to elements
+// the reason is that -webkit-animation-fill-mode: forwards; is still in experimental mode
+@-webkit-keyframes animate-width {
+    0% {
+        visibility: hidden;
+        width: 0;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}
+
+@-moz-keyframes animate-width {
+    0% {
+        visibility: hidden;
+        width: 0;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}
+
+@keyframes animate-width {
+    0% {
+        visibility: hidden;
+        width: 0;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}

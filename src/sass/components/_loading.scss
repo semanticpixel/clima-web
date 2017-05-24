@@ -1,0 +1,135 @@
+.loading {
+
+    @at-root #{&}__circle {
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        height: $card-avatar-height;
+        width: $card-avatar-height;
+        background-color: $loading-color;
+        animation: pulse .65s infinite alternate;
+    }
+
+    @at-root #{&}__line {
+        height: 10px;
+        margin: 10px 0;
+        background-color: $loading-color;
+        animation: pulse .65s infinite alternate;
+    }
+
+    @at-root #{&}__line-wrapper {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px; 
+        flex: 1;
+    }
+
+     @at-root #{&}__message {
+         margin-top: 15px;
+
+         .loading__line:last-child {
+             margin-bottom: 0;
+         }
+     }
+}
+
+.loading {
+
+    @at-root #{&}__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 100vh;
+        background-color: #f0f1ef;
+        background-color: rgba(#f0f1ef, 0.5);
+        z-index: 998;
+    }
+
+    @at-root #{&}__animation {
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        position: relative;
+        text-align: center;
+        font-size: 40px;
+    }
+
+    @at-root #{&}__dot {
+        height: 2rem;
+        width: 2rem;
+        display: inline-block;
+        border-radius: 50%;
+        // background-color: #333;
+        background-color: #f36412;
+
+        font-size: 50px;
+        /**
+         * Use the blink animation, which is defined above
+         */
+        animation-name: blink;
+        /**
+         * The animation should take 1.4 seconds
+         */
+        animation-duration: 1.4s; /* 2s */
+        /**
+         * It will repeat itself forever
+         */
+        animation-iteration-count: infinite;
+        /**
+         * This makes sure that the starting style (opacity: .2)
+         * of the animation is applied before the animation starts.
+         * Otherwise we would see a short flash or would have
+         * to set the default styling of the dots to the same
+         * as the animation. Same applies for the ending styles.
+         */
+        animation-fill-mode: both;
+
+        &:nth-child(2) {
+            /**
+             * Starts the animation of the third dot
+             * with a delay of .2s, otherwise all dots
+             * would animate at the same time
+             */
+            animation-delay: .2s;
+        }
+
+        &:nth-child(3) {
+            /**
+             * Starts the animation of the third dot
+             * with a delay of .4s, otherwise all dots
+             * would animate at the same time
+             */
+            animation-delay: .4s;
+        }
+    }
+
+    @at-root #{&}__circle {
+        height: 1rem;
+        width: 1rem;
+        background-color: #f36412;
+        display: inline-block;
+        border-radius: 50%;
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+
+        &:nth-child(1) {
+            -webkit-animation: fade_left 1583ms infinite;
+            animation: fade_left 1583ms infinite;
+        }
+
+        &:nth-child(2) {
+            -webkit-animation: fade_center 1583ms infinite;
+            animation: fade_center 1583ms infinite;
+        }
+
+        &:nth-child(3) {
+            -webkit-animation: fade_right 1583ms infinite;
+            animation: fade_right 1583ms infinite;
+        }
+    }
+}
