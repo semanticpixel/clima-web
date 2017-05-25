@@ -8,6 +8,9 @@ define('datasource/weather',[
     const CORS_PROXY = 'https://crossorigin.me/';
     const URL = 'http://api.openweathermap.org/data/2.5/weather';
     const API_KEY = 'f1db55c38112d4be78d14107861cb2c8';
+
+    const FORECAST_URL = 'https://api.darksky.net/forecast';
+    const FORECAST_API_KEY = 'd1d02e99b64fd7ba063978ac19af2f04';
     const FAHRENHEIT = 'F';
     
     class Weather extends Datasource {
@@ -34,6 +37,37 @@ define('datasource/weather',[
                 let jsonResponse = JSON.parse(response);
 
                 return jsonResponse;
+            });
+        }
+
+        getForecast(lat, long) {
+            let options = {
+                method: 'GET',
+                url: `${FORECAST_URL}/${FORECAST_API_KEY}/${lat},${long}`
+            };
+
+            return new Promise((resolve, reject) => {
+                
+                // Callback function
+                window.callbackJSON = (forecast) => {
+                    // delete callback from global scope
+                    delete window.callbackJSON;
+                    document.body.removeChild(this.dummyScript);
+                    this.dummyScript = null;
+                    
+                    // resolve promise with forecast
+                    resolve(forecast);
+                };
+
+                const callbackName = 'callbackJSON';
+                this.dummyScript = document.createElement('script');
+                this.dummyScript.src = `${options.url}?callback=${callbackName}`;
+                
+                // reject promise on error
+                this.dummyScript.onerror = reject;
+
+                // append dummy script to load JSON
+                document.body.appendChild(this.dummyScript);
             });
         }
 

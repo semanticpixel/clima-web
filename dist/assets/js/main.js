@@ -98,7 +98,8 @@ define('components/weather', [], function () {
                     return _this2.mapSource.getCity(_this2.latitude, _this2.longitude);
                 }).then(function (city) {
                     _this2.city = city;
-                    return _this2.weatherSource.getWeather(_this2.latitude, _this2.longitude);
+                    // return this.weatherSource.getWeather(this.latitude, this.longitude);
+                    return _this2.weatherSource.getForecast(_this2.latitude, _this2.longitude);
                 }).then(function (clima) {
                     return _this2.populateClima(clima);
                 });
@@ -106,12 +107,14 @@ define('components/weather', [], function () {
         }, {
             key: 'populateClima',
             value: function populateClima(clima) {
-                var climaBlockSection = this.determineClimaBlock(clima.main.temp, this.weatherSource.unitSymbol.toUpperCase());
+                var temperature = clima.currently.temperature; // clima.main.temp for openweather API
+
+                var climaBlockSection = this.determineClimaBlock(temperature, this.weatherSource.unitSymbol.toUpperCase());
                 this.currentClimaBlockSection = this.clima.querySelector(climaBlockSection);
 
                 var climaBlock = this.weatherSource.render({
                     city: this.city,
-                    temp: clima.main.temp
+                    temp: temperature
                 });
                 this.currentClimaBlockSection.appendChild(climaBlock);
                 this.currentClimaBlockSection.classList.add('clima__temperature--active');
@@ -321,8 +324,7 @@ define('datasource/map', ['datasource/datasource'], function (Datasource) {
 
                 return this.fetch(options).then(function (response) {
                     var jsonResponse = JSON.parse(response);
-                    console.log(jsonResponse);
-                    return jsonResponse.results[0].address_components[3].short_name;
+                    return jsonResponse.results[1].address_components[0].short_name;
                 });
             }
         }]);
@@ -348,6 +350,9 @@ define('datasource/weather', ['datasource/datasource'], function (Datasource) {
     var CORS_PROXY = 'https://crossorigin.me/';
     var URL = 'http://api.openweathermap.org/data/2.5/weather';
     var API_KEY = 'f1db55c38112d4be78d14107861cb2c8';
+
+    var FORECAST_URL = 'https://api.darksky.net/forecast';
+    var FORECAST_API_KEY = 'd1d02e99b64fd7ba063978ac19af2f04';
     var FAHRENHEIT = 'F';
 
     var Weather = function (_Datasource) {
@@ -381,6 +386,40 @@ define('datasource/weather', ['datasource/datasource'], function (Datasource) {
                     var jsonResponse = JSON.parse(response);
 
                     return jsonResponse;
+                });
+            }
+        }, {
+            key: 'getForecast',
+            value: function getForecast(lat, long) {
+                var _this2 = this;
+
+                var options = {
+                    method: 'GET',
+                    url: FORECAST_URL + '/' + FORECAST_API_KEY + '/' + lat + ',' + long
+                };
+
+                return new Promise(function (resolve, reject) {
+
+                    // Callback function
+                    window.callbackJSON = function (forecast) {
+                        // delete callback from global scope
+                        delete window.callbackJSON;
+                        document.body.removeChild(_this2.dummyScript);
+                        _this2.dummyScript = null;
+
+                        // resolve promise with forecast
+                        resolve(forecast);
+                    };
+
+                    var callbackName = 'callbackJSON';
+                    _this2.dummyScript = document.createElement('script');
+                    _this2.dummyScript.src = options.url + '?callback=' + callbackName;
+
+                    // reject promise on error
+                    _this2.dummyScript.onerror = reject;
+
+                    // append dummy script to load JSON
+                    document.body.appendChild(_this2.dummyScript);
                 });
             }
 

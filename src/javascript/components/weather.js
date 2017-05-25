@@ -47,18 +47,21 @@ define('components/weather',[
                 })
                 .then((city) => {
                     this.city = city;
-                    return this.weatherSource.getWeather(this.latitude, this.longitude);
+                    // return this.weatherSource.getWeather(this.latitude, this.longitude);
+                    return this.weatherSource.getForecast(this.latitude, this.longitude);
                 })
                 .then((clima) => this.populateClima(clima));
         }
 
         populateClima(clima) {
-            let climaBlockSection = this.determineClimaBlock(clima.main.temp, this.weatherSource.unitSymbol.toUpperCase());
+            const temperature = clima.currently.temperature; // clima.main.temp for openweather API
+
+            let climaBlockSection = this.determineClimaBlock(temperature, this.weatherSource.unitSymbol.toUpperCase());
             this.currentClimaBlockSection = this.clima.querySelector(climaBlockSection);
 
             const climaBlock = this.weatherSource.render({
                 city: this.city,
-                temp: clima.main.temp
+                temp: temperature
             });
             this.currentClimaBlockSection.appendChild(climaBlock);
             this.currentClimaBlockSection.classList.add('clima__temperature--active');

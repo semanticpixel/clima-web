@@ -22,8 +22,7 @@ define('datasource/map',[
 
             return this.fetch(options).then((response) => {
                 let jsonResponse = JSON.parse(response);
-                console.log(jsonResponse);
-                return jsonResponse.results[0].address_components[3].short_name;
+                return jsonResponse.results[1].address_components[0].short_name;
             });
         }
     }
