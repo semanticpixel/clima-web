@@ -22,7 +22,21 @@ define('datasource/map',[
 
             return this.fetch(options).then((response) => {
                 let jsonResponse = JSON.parse(response);
-                return jsonResponse.results[1].address_components[0].short_name;
+                let i;
+                let cityName;
+                const adressComponents = jsonResponse.results[0].address_components
+                const adressComponentsLength = adressComponents.length;
+
+                for (i = 0; i < adressComponentsLength; i += 1) {
+                    const component = adressComponents[i];
+
+                    if (component.types[0] === 'locality') {
+                        cityName = component.short_name;
+                        break;
+                    }
+                }
+
+                return cityName;
             });
         }
     }

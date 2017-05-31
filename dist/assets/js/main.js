@@ -324,7 +324,21 @@ define('datasource/map', ['datasource/datasource'], function (Datasource) {
 
                 return this.fetch(options).then(function (response) {
                     var jsonResponse = JSON.parse(response);
-                    return jsonResponse.results[1].address_components[0].short_name;
+                    var i = void 0;
+                    var cityName = void 0;
+                    var adressComponents = jsonResponse.results[0].address_components;
+                    var adressComponentsLength = adressComponents.length;
+
+                    for (i = 0; i < adressComponentsLength; i += 1) {
+                        var component = adressComponents[i];
+
+                        if (component.types[0] === 'locality') {
+                            cityName = component.short_name;
+                            break;
+                        }
+                    }
+
+                    return cityName;
                 });
             }
         }]);
