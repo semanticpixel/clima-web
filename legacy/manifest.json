@@ -1,0 +1,16 @@
+{
+    "name": "Clima",
+    "short_name": "Clima",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "theme_color": "#fff",
+    "background_color": "#fff",
+    "icons": [
+        {
+            "src": "/icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
