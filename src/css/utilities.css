@@ -1,0 +1,10 @@
+@layer utilities {
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weight-1 {
+    flex: 1;
+  }
+}

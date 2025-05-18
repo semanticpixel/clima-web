@@ -1,0 +1,49 @@
+@layer components {
+  .temperature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+
+    &.hot {
+      background-color: color-mix(in oklch, var(--warm-start) calc((6 - var(--index)) / 6 * 100%), var(--warm-end) calc(var(--index) / 6 * 100%));
+      /* background-color: color-mix(in oklch, var(--warm-start) calc((7 - var(--index)) / 7 * 100%), var(--warm-end) calc(var(--index) / 7 * 100%)); */
+    }
+
+    &.normal {
+      background-color: #fff;
+      background-color: color-mix(in oklch, var(--warm-end), var(--cold-start));
+      background-color: color-mix(in oklch, var(--warm-end) 0%, var(--cold-start) 0%);
+      /* background-color: color-mix(in oklch, var(--warm-end) 0%, var(--cold-start) 90%); */
+    }
+
+    &.cold {
+      background-color: color-mix(in oklch, var(--cold-start) calc((6 - var(--index)) / 6 * 100%), var(--cold-end) calc(var(--index) / 6 * 100%));
+      /* background-color: color-mix(in oklch, var(--cold-start) calc((7 - var(--index)) / 7 * 100%), var(--cold-end) calc(var(--index) / 7 * 100%)); */
+    }
+
+    &.active {
+      flex: 0;
+    }
+  }
+
+  .current {
+    text-align: center;
+    padding-block: 1.6rem;
+    font-weight: bold;
+
+    .location {
+      font-size: 1.5rem;
+      font-weight: normal;
+    }
+
+    .forecast {
+      font-size: 4rem;
+
+      &:after {
+        content: '\00b0';
+        position: absolute;
+      }
+    }
+  }
+}

@@ -12,7 +12,64 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link href="./src/css/clima.css" rel="stylesheet">
   </head>
-  <body style="display: grid; place-items: center;">
-    In progress
+  <body>
+    <main class="clima column">
+      <div id="hot-7" class="temperature hot" style="--index: 0;"></div>
+      <div id="hot-6" class="temperature hot" style="--index: 1;"></div>
+      <div id="hot-5" class="temperature hot" style="--index: 2;"></div>
+      <div id="hot-4" class="temperature hot" style="--index: 3;"></div>
+      <div id="hot-3" class="temperature hot" style="--index: 4;"></div>
+      <div id="hot-2" class="temperature hot" style="--index: 5;"></div>
+      <div id="hot-1" class="temperature hot" style="--index: 6;"></div>
+      <div id="normal" class="temperature normal active">
+        <div class="current column">
+          <div class="forecast">65</div>
+          <h1 class="location">San Francisco, CA</h1>
+        </div>
+      </div>
+      <div id="cold-1" class="temperature cold" style="--index: 0;"></div>
+      <div id="cold-2" class="temperature cold" style="--index: 1;"></div>
+      <div id="cold-3" class="temperature cold" style="--index: 2;"></div>
+      <div id="cold-4" class="temperature cold" style="--index: 3;"></div>
+      <div id="cold-5" class="temperature cold" style="--index: 4;"></div>
+      <div id="cold-6" class="temperature cold" style="--index: 5;"></div>
+      <div id="cold-7" class="temperature cold" style="--index: 6;"></div>
+    </main>
+    <!-- <main class="clima" style="display:flex;gap:8px;">
+      <div class="column" style="flex:1">
+        <div id="hot-7" class="temperature hot" style="--index: 0;"></div>
+        <div id="hot-6" class="temperature hot" style="--index: 1;"></div>
+        <div id="hot-5" class="temperature hot" style="--index: 2;"></div>
+        <div id="hot-4" class="temperature hot" style="--index: 3;"></div>
+        <div id="hot-3" class="temperature hot" style="--index: 4;"></div>
+        <div id="hot-2" class="temperature hot" style="--index: 5;"></div>
+        <div id="hot-1" class="temperature hot" style="--index: 6;"></div>
+        <div id="normal" class="temperature normal"></div>
+        <div id="cold-1" class="temperature cold" style="--index: 0;"></div>
+        <div id="cold-2" class="temperature cold" style="--index: 1;"></div>
+        <div id="cold-3" class="temperature cold" style="--index: 2;"></div>
+        <div id="cold-4" class="temperature cold" style="--index: 3;"></div>
+        <div id="cold-5" class="temperature cold" style="--index: 4;"></div>
+        <div id="cold-6" class="temperature cold" style="--index: 5;"></div>
+        <div id="cold-7" class="temperature cold" style="--index: 6;"></div>
+      </div>
+      <div class="column" style="flex:1">
+        <div id="hot-7" class="temperature" style="background-color: #f36412;"></div>
+        <div id="hot-6" class="temperature" style="background-color: #f38912;"></div>
+        <div id="hot-5" class="temperature" style="background-color: #f3af12;"></div>
+        <div id="hot-4" class="temperature" style="background-color: #f3d412;"></div>
+        <div id="hot-3" class="temperature" style="background-color: #f6de4a;"></div>
+        <div id="hot-2" class="temperature" style="background-color: #f9e882;"></div>
+        <div id="hot-1" class="temperature" style="background-color: #fcf2ba;"></div>
+        <div id="normal" class="temperature" style="background-color: #fff;"></div>
+        <div id="cold-1" class="temperature" style="background-color: #e7f2fa;"></div>
+        <div id="cold-2" class="temperature" style="background-color: #c7e1f3;"></div>
+        <div id="cold-3" class="temperature" style="background-color: #a7d0ec;"></div>
+        <div id="cold-4" class="temperature" style="background-color: #87bfe4;"></div>
+        <div id="cold-5" class="temperature" style="background-color: #67aedd;"></div>
+        <div id="cold-6" class="temperature" style="background-color: #479dd6;"></div>
+        <div id="cold-7" class="temperature" style="background-color: #2980b9;"></div>
+      </div>
+    </main> -->
   </body>
 </html>
