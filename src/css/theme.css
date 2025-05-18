@@ -1,0 +1,20 @@
+@layer theme {
+  :root {
+    --warm-start: #f36412;
+    --warm-end: #fcf2ba;
+    --cold-start: #e7f2fa;
+    --cold-end: #2980b9;
+
+    --baseFont: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  }
+
+  html {
+    /* 1rem = 10px */
+    font-size: 62.5%;
+  }
+  
+  body {
+    font-family: var(--baseFont);
+    /* color: #767676; */
+  }
+}
