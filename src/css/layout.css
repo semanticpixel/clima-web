@@ -1,3 +1,7 @@
 main {
   height: 100dvh;
 }
+
+.templates {
+  display: none;
+}
