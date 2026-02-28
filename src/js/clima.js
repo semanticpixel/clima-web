@@ -108,8 +108,10 @@ function updateUI(temp, location, weatherCode) {
   const current = document.createElement('div');
   current.className = 'current column';
   current.innerHTML = `
-    <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
-    <div class="forecast">${temp}</div>
+    <div class="weather-main">
+      <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
+      <div class="forecast">${temp}</div>
+    </div>
     <h1 class="location">${location}</h1>
   `;
   section.appendChild(current);
