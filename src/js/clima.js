@@ -1,8 +1,28 @@
 async function getWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&temperature_unit=fahrenheit`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`;
   const res = await fetch(url);
   const data = await res.json();
-  return Math.round(data.current.temperature_2m);
+  return {
+    temp: Math.round(data.current.temperature_2m),
+    weatherCode: data.current.weather_code,
+  };
+}
+
+function weatherCodeToIcon(code) {
+  if (code === 0)                         return 'wi-day-sunny';
+  if (code <= 2)                          return 'wi-day-cloudy';
+  if (code === 3)                         return 'wi-cloudy';
+  if (code <= 48)                         return 'wi-fog';
+  if (code <= 55)                         return 'wi-sprinkle';
+  if (code <= 57)                         return 'wi-rain-mix';
+  if (code <= 65)                         return 'wi-rain';
+  if (code <= 67)                         return 'wi-rain-mix';
+  if (code <= 75)                         return 'wi-snow';
+  if (code === 77)                        return 'wi-snow';
+  if (code <= 82)                         return 'wi-showers';
+  if (code <= 86)                         return 'wi-snow';
+  if (code === 95)                        return 'wi-thunderstorm';
+  return 'wi-thunderstorm';
 }
 
 async function coordsToCity(lat, lon) {
@@ -72,7 +92,7 @@ function determineSectionId(temp) {
   return 'cold-7';
 }
 
-function updateUI(temp, location) {
+function updateUI(temp, location, weatherCode) {
   // Remove active state and content from the previous section
   const prev = document.querySelector('.temperature.active');
   if (prev) {
@@ -88,6 +108,7 @@ function updateUI(temp, location) {
   const current = document.createElement('div');
   current.className = 'current column';
   current.innerHTML = `
+    <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
     <div class="forecast">${temp}</div>
     <h1 class="location">${location}</h1>
   `;
@@ -101,10 +122,10 @@ async function init() {
     const { latitude, longitude } = coords;
     const { address: { city, state } } = address;
 
-    const temp = await getWeather(latitude, longitude);
+    const { temp, weatherCode } = await getWeather(latitude, longitude);
 
     isLoading(false);
-    updateUI(temp, `${city}, ${state}`);
+    updateUI(temp, `${city}, ${state}`, weatherCode);
   } catch (err) {
     console.log(err);
     // show error in UI
