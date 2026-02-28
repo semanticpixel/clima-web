@@ -37,6 +37,11 @@
       font-weight: normal;
     }
 
+    .weather-icon {
+      font-size: 3rem;
+      margin-bottom: 0.4rem;
+    }
+
     .forecast {
       font-size: 4rem;
 
