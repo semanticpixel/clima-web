@@ -1,9 +1,10 @@
 async function getWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&temperature_unit=fahrenheit`;
   const res = await fetch(url);
   const data = await res.json();
   return {
     temp: Math.round(data.current.temperature_2m),
+    apparentTemp: Math.round(data.current.apparent_temperature),
     weatherCode: data.current.weather_code,
   };
 }
@@ -92,7 +93,7 @@ function determineSectionId(temp) {
   return 'cold-7';
 }
 
-function updateUI(temp, location, weatherCode) {
+function updateUI(temp, apparentTemp, location, weatherCode) {
   // Remove active state and content from the previous section
   const prev = document.querySelector('.temperature.active');
   if (prev) {
@@ -101,8 +102,8 @@ function updateUI(temp, location, weatherCode) {
     prev.classList.remove('active');
   }
 
-  // Place weather info in the correct section
-  const section = document.getElementById(determineSectionId(temp));
+  // Place weather info in the correct section based on apparent (feels like) temperature
+  const section = document.getElementById(determineSectionId(apparentTemp));
   section.classList.add('active');
 
   const current = document.createElement('div');
@@ -124,10 +125,10 @@ async function init() {
     const { latitude, longitude } = coords;
     const { address: { city, state } } = address;
 
-    const { temp, weatherCode } = await getWeather(latitude, longitude);
+    const { temp, apparentTemp, weatherCode } = await getWeather(latitude, longitude);
 
     isLoading(false);
-    updateUI(temp, `${city}, ${state}`, weatherCode);
+    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode);
   } catch (err) {
     console.log(err);
     // show error in UI
