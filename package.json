@@ -4,5 +4,5 @@
   "description": "Simple Weather app",
   "author": "Luis Torres",
   "license": "MIT",
-  "packageManager": "yarn@4.8.1"
+  "packageManager": "pnpm@10.30.3"
 }
