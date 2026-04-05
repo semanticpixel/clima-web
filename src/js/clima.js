@@ -70,27 +70,21 @@ function isLoading(isLoading) {
 }
 
 // Temperature ranges (Fahrenheit) mapped to section IDs
-// >105: hot-7, 100-105: hot-6, 95-100: hot-5, 90-95: hot-4
-// 85-90: hot-3, 80-85: hot-2, 75-80: hot-1
-// 70-75: normal
-// 65-70: cold-1, 60-65: cold-2, 55-60: cold-3, 50-55: cold-4
-// 45-50: cold-5, 40-45: cold-6, <40: cold-7
+// >95: hot-5, >88: hot-4, >81: hot-3, >77: hot-2, >73: hot-1
+// 66-73: normal
+// >59: cold-1, >52: cold-2, >45: cold-3, >38: cold-4, <=38: cold-5
 function determineSectionId(temp) {
-  if (temp > 105) return 'hot-7';
-  if (temp > 100) return 'hot-6';
   if (temp > 95)  return 'hot-5';
-  if (temp > 90)  return 'hot-4';
-  if (temp > 85)  return 'hot-3';
-  if (temp > 80)  return 'hot-2';
-  if (temp > 75)  return 'hot-1';
-  if (temp >= 70) return 'normal';
-  if (temp >= 65) return 'cold-1';
-  if (temp >= 60) return 'cold-2';
-  if (temp >= 55) return 'cold-3';
-  if (temp >= 50) return 'cold-4';
-  if (temp >= 45) return 'cold-5';
-  if (temp >= 40) return 'cold-6';
-  return 'cold-7';
+  if (temp > 88)  return 'hot-4';
+  if (temp > 81)  return 'hot-3';
+  if (temp > 77)  return 'hot-2';
+  if (temp > 73)  return 'hot-1';
+  if (temp >= 66) return 'normal';
+  if (temp >= 59) return 'cold-1';
+  if (temp >= 52) return 'cold-2';
+  if (temp >= 45) return 'cold-3';
+  if (temp >= 38) return 'cold-4';
+  return 'cold-5';
 }
 
 function updateUI(temp, apparentTemp, location, weatherCode) {

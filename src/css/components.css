@@ -6,8 +6,7 @@
     flex: 1;
 
     &.hot {
-      background-color: color-mix(in oklch, var(--warm-start) calc((6 - var(--index)) / 6 * 100%), var(--warm-end) calc(var(--index) / 6 * 100%));
-      /* background-color: color-mix(in oklch, var(--warm-start) calc((7 - var(--index)) / 7 * 100%), var(--warm-end) calc(var(--index) / 7 * 100%)); */
+      background-color: color-mix(in oklch, var(--warm-start) calc((4 - var(--index)) / 4 * 100%), var(--warm-end) calc(var(--index) / 4 * 100%));
     }
 
     &.normal {
@@ -18,8 +17,7 @@
     }
 
     &.cold {
-      background-color: color-mix(in oklch, var(--cold-start) calc((6 - var(--index)) / 6 * 100%), var(--cold-end) calc(var(--index) / 6 * 100%));
-      /* background-color: color-mix(in oklch, var(--cold-start) calc((7 - var(--index)) / 7 * 100%), var(--cold-end) calc(var(--index) / 7 * 100%)); */
+      background-color: color-mix(in oklch, var(--cold-start) calc((4 - var(--index)) / 4 * 100%), var(--cold-end) calc(var(--index) / 4 * 100%));
     }
 
     &.active {
