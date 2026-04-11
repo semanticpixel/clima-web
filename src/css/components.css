@@ -52,8 +52,29 @@
 
       &:after {
         content: '\00b0';
-        position: absolute;
       }
+    }
+
+    .forecast-range {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.4rem;
+      opacity: 0.6;
+    }
+
+    .forecast-extreme {
+      font-size: 1.4rem;
+      font-weight: normal;
+
+      &:after {
+        content: '\00b0';
+      }
+    }
+
+    .forecast-range-separator {
+      font-size: 1.4rem;
+      font-weight: normal;
     }
   }
 

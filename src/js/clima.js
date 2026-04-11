@@ -1,11 +1,13 @@
 async function getWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&temperature_unit=fahrenheit`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
   const res = await fetch(url);
   const data = await res.json();
   return {
     temp: Math.round(data.current.temperature_2m),
     apparentTemp: Math.round(data.current.apparent_temperature),
     weatherCode: data.current.weather_code,
+    minTemp: Math.round(data.daily.temperature_2m_min[0]),
+    maxTemp: Math.round(data.daily.temperature_2m_max[0]),
   };
 }
 
@@ -87,7 +89,7 @@ function determineSectionId(temp) {
   return 'cold-5';
 }
 
-function updateUI(temp, apparentTemp, location, weatherCode) {
+function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp) {
   // Remove active state and content from the previous section
   const prev = document.querySelector('.temperature.active');
   if (prev) {
@@ -103,6 +105,11 @@ function updateUI(temp, apparentTemp, location, weatherCode) {
   const current = document.createElement('div');
   current.className = 'current column';
   current.innerHTML = `
+    <div class="forecast-range">
+      <span class="forecast-extreme forecast-low">${minTemp}</span>
+      <span class="forecast-range-separator">/</span>
+      <span class="forecast-extreme forecast-high">${maxTemp}</span>
+    </div>
     <div class="weather-main">
       <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
       <div class="forecast">${temp}</div>
@@ -119,10 +126,10 @@ async function init() {
     const { latitude, longitude } = coords;
     const { address: { city, state } } = address;
 
-    const { temp, apparentTemp, weatherCode } = await getWeather(latitude, longitude);
+    const { temp, apparentTemp, weatherCode, minTemp, maxTemp } = await getWeather(latitude, longitude);
 
     isLoading(false);
-    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode);
+    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode, minTemp, maxTemp);
   } catch (err) {
     console.log(err);
     // show error in UI
