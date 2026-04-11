@@ -52,7 +52,16 @@
 
       &:after {
         content: '\00b0';
-        position: absolute;
+      }
+    }
+
+    .forecast-extreme {
+      font-size: 1.8rem;
+      font-weight: normal;
+      opacity: 0.6;
+
+      &:after {
+        content: '\00b0';
       }
     }
   }
