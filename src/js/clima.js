@@ -105,11 +105,14 @@ function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp) {
   const current = document.createElement('div');
   current.className = 'current column';
   current.innerHTML = `
-    <div class="weather-main">
+    <div class="forecast-range">
       <span class="forecast-extreme forecast-low">${minTemp}</span>
+      <span class="forecast-range-separator">/</span>
+      <span class="forecast-extreme forecast-high">${maxTemp}</span>
+    </div>
+    <div class="weather-main">
       <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
       <div class="forecast">${temp}</div>
-      <span class="forecast-extreme forecast-high">${maxTemp}</span>
     </div>
     <h1 class="location">${location}</h1>
   `;
