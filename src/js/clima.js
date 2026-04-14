@@ -1,11 +1,12 @@
 async function getWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto`;
   const res = await fetch(url);
   const data = await res.json();
   return {
     temp: Math.round(data.current.temperature_2m),
     apparentTemp: Math.round(data.current.apparent_temperature),
     weatherCode: data.current.weather_code,
+    isDay: !!data.current.is_day,
     minTemp: Math.round(data.daily.temperature_2m_min[0]),
     maxTemp: Math.round(data.daily.temperature_2m_max[0]),
     daily: data.daily.time.map((dateStr, i) => ({
@@ -17,9 +18,9 @@ async function getWeather(lat, lon) {
   };
 }
 
-function weatherCodeToIcon(code) {
-  if (code === 0)                         return 'wi-day-sunny';
-  if (code <= 2)                          return 'wi-day-cloudy';
+function weatherCodeToIcon(code, isDay = true) {
+  if (code === 0)                         return isDay ? 'wi-day-sunny' : 'wi-night-clear';
+  if (code <= 2)                          return isDay ? 'wi-day-cloudy' : 'wi-night-alt-cloudy';
   if (code === 3)                         return 'wi-cloudy';
   if (code <= 48)                         return 'wi-fog';
   if (code <= 55)                         return 'wi-sprinkle';
@@ -102,7 +103,7 @@ function determineSectionId(temp) {
   return 'cold-5';
 }
 
-function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp, daily) {
+function updateUI(temp, apparentTemp, location, weatherCode, isDay, minTemp, maxTemp, daily) {
   // Remove active state and content from the previous section
   const prev = document.querySelector('.temperature.active');
   if (prev) {
@@ -124,7 +125,7 @@ function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp, d
       <span class="forecast-extreme forecast-high">${maxTemp}</span>
     </div>
     <div class="weather-main">
-      <i class="wi ${weatherCodeToIcon(weatherCode)} weather-icon"></i>
+      <i class="wi ${weatherCodeToIcon(weatherCode, isDay)} weather-icon"></i>
       <div class="forecast">${temp}</div>
     </div>
     <h1 class="location">${location}</h1>
@@ -153,10 +154,10 @@ async function init() {
     const { latitude, longitude } = coords;
     const { address: { city, state } } = address;
 
-    const { temp, apparentTemp, weatherCode, minTemp, maxTemp, daily } = await getWeather(latitude, longitude);
+    const { temp, apparentTemp, weatherCode, isDay, minTemp, maxTemp, daily } = await getWeather(latitude, longitude);
 
     isLoading(false);
-    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode, minTemp, maxTemp, daily);
+    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode, isDay, minTemp, maxTemp, daily);
   } catch (err) {
     console.log(err);
     // show error in UI
