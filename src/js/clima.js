@@ -1,5 +1,5 @@
 async function getWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto`;
   const res = await fetch(url);
   const data = await res.json();
   return {
@@ -8,6 +8,12 @@ async function getWeather(lat, lon) {
     weatherCode: data.current.weather_code,
     minTemp: Math.round(data.daily.temperature_2m_min[0]),
     maxTemp: Math.round(data.daily.temperature_2m_max[0]),
+    daily: data.daily.time.map((dateStr, i) => ({
+      date: dateStr,
+      weatherCode: data.daily.weather_code[i],
+      minTemp: Math.round(data.daily.temperature_2m_min[i]),
+      maxTemp: Math.round(data.daily.temperature_2m_max[i]),
+    })),
   };
 }
 
@@ -26,6 +32,13 @@ function weatherCodeToIcon(code) {
   if (code <= 86)                         return 'wi-snow';
   if (code === 95)                        return 'wi-thunderstorm';
   return 'wi-thunderstorm';
+}
+
+function dayLabel(dateStr) {
+  const date = new Date(dateStr + 'T00:00:00');
+  const today = new Date();
+  if (date.toDateString() === today.toDateString()) return 'Today';
+  return date.toLocaleDateString('en-US', { weekday: 'short' });
 }
 
 async function coordsToCity(lat, lon) {
@@ -89,7 +102,7 @@ function determineSectionId(temp) {
   return 'cold-5';
 }
 
-function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp) {
+function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp, daily) {
   // Remove active state and content from the previous section
   const prev = document.querySelector('.temperature.active');
   if (prev) {
@@ -115,7 +128,21 @@ function updateUI(temp, apparentTemp, location, weatherCode, minTemp, maxTemp) {
       <div class="forecast">${temp}</div>
     </div>
     <h1 class="location">${location}</h1>
+    <div class="forecast-toggle-hint">&#x25BE;</div>
+    <div class="forecast-week">
+      ${daily.map(day => `
+        <div class="forecast-day">
+          <span class="forecast-day-name">${dayLabel(day.date)}</span>
+          <i class="wi ${weatherCodeToIcon(day.weatherCode)} forecast-day-icon"></i>
+          <span class="forecast-day-high">${day.maxTemp}&deg;</span>
+          <span class="forecast-day-low">${day.minTemp}&deg;</span>
+        </div>
+      `).join('')}
+    </div>
   `;
+  current.addEventListener('click', () => {
+    current.classList.toggle('expanded');
+  });
   section.appendChild(current);
 }
 
@@ -126,10 +153,10 @@ async function init() {
     const { latitude, longitude } = coords;
     const { address: { city, state } } = address;
 
-    const { temp, apparentTemp, weatherCode, minTemp, maxTemp } = await getWeather(latitude, longitude);
+    const { temp, apparentTemp, weatherCode, minTemp, maxTemp, daily } = await getWeather(latitude, longitude);
 
     isLoading(false);
-    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode, minTemp, maxTemp);
+    updateUI(temp, apparentTemp, `${city}, ${state}`, weatherCode, minTemp, maxTemp, daily);
   } catch (err) {
     console.log(err);
     // show error in UI

@@ -6,6 +6,9 @@
     --cold-end: #2980b9;
 
     --baseFont: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+
+    /* --motion-elastic: linear(0, 0.36 15%, 0.98 39%, 1.05 48%, 1.02 58%, 1 68%, 0.99 85%, 1); */
+    --motion-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   html {
